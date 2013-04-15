@@ -250,6 +250,16 @@ as a URL to the endpoint of that resource if accessing a specific resources. If 
 is also ``True``, the result of thesub-resource's ``dehydrate`` will be included
 in full. Default is ``True``
 
+``max_depth``
+~~~~~~~~~~~~~
+
+.. attribute:: RelatedField.max_depth
+
+Sets a limit on how deeply nested data structures will be rendered in full.  
+Value is an integer representing the depth to which the relationship will be followed, 
+including the current resource.  (``max_depth=1`` is equivalent to ``full=False``).  
+Default is None, which indicated no limit.  Ignored when ``full=False``.
+
 ``related_name``
 ~~~~~~~~~~~~~~~~
 

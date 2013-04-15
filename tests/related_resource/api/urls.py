@@ -8,11 +8,14 @@ from related_resource.api.resources import NoteResource, UserResource, \
         ExtraDataResource, FreshNoteResource, FreshMediaBitResource, \
         CompanyResource, ProductResource, AddressResource, \
         PersonResource, DogResource, DogHouseResource, BoneResource
+        DepthLimitedCategoryResource, ZeroDepthCategoryResource
 
 api = Api(api_name='v1')
 api.register(NoteResource(), canonical=True)
 api.register(UserResource(), canonical=True)
 api.register(CategoryResource(), canonical=True)
+api.register(DepthLimitedCategoryResource(), canonical=True)
+api.register(ZeroDepthCategoryResource(), canonical=True)
 api.register(TagResource(), canonical=True)
 api.register(TaggableResource(), canonical=True)
 api.register(TaggableTagResource(), canonical=True)
