@@ -450,7 +450,7 @@ class RelatedField(ApiField):
         is a callable, and returns ``True``, the field will be included during
         dehydration.
         Defaults to ``all``.
-        
+
         Optionally accepts a ``full_list``, which indicated whether or not
         data should be fully dehydrated when the request is for a list of
         resources. Accepts ``True``, ``False`` or a callable that accepts
@@ -677,17 +677,24 @@ class RelatedField(ApiField):
         Based on the ``full``, ``list_full`` and ``detail_full`` returns ``True`` or ``False``
         indicating weather the resource should be fully dehydrated.
         """
-        should_dehydrate_full_resource = False
-        if self.full:
-            is_details_view = resolve(bundle.request.path).url_name == "api_dispatch_detail"
-            if is_details_view:
-                if (not callable(self.full_detail) and self.full_detail) or (callable(self.full_detail) and self.full_detail(bundle)):
-                    should_dehydrate_full_resource = True
-            else:
-                if (not callable(self.full_list) and self.full_list) or (callable(self.full_list) and self.full_list(bundle)):
-                    should_dehydrate_full_resource = True
+        #**********************************************************************#
+        #should_dehydrate_full_resource = False
+        #if self.full:
+            #is_details_view = resolve(bundle.request.path).url_name == "api_dispatch_detail"
+            #if is_details_view:
+                #if (not callable(self.full_detail) and self.full_detail) or (callable(self.full_detail) and self.full_detail(bundle)):
+                    #should_dehydrate_full_resource = True
+            #else:
+                #if (not callable(self.full_list) and self.full_list) or (callable(self.full_list) and self.full_list(bundle)):
+                    #should_dehydrate_full_resource = True
 
-        return should_dehydrate_full_resource
+        #return should_dehydrate_full_resource
+        #**********************************************************************#
+        # TODO: above code causes manual full_dehydrate calls to fail;
+        #       follow up on this open issue:
+        #       https://github.com/toastdriven/django-tastypie/issues/917
+        return self.full
+        #**********************************************************************#
 
 
 class ToOneField(RelatedField):
@@ -730,7 +737,7 @@ class ToOneField(RelatedField):
                 raise ApiFieldError("The model '%r' has an empty attribute '%s' and doesn't allow a null value." % (previous_obj, attr))
 
             return None
-        
+
 
         self.fk_resource = self.get_related_resource(foreign_obj)
         fk_bundle = Bundle(obj=foreign_obj, request=bundle.request)
